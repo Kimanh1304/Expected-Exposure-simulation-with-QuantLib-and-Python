@@ -4,7 +4,7 @@ This code shows how to use the Python bindings of the QuantLib library to calcul
 
 Using a forward Monte Carlo Simulation to generate future market scenarios out of one-factor gaussian short rate model and evaluate the NPV of all swaps in the netting set under each scenario.
 
-## First we define a time grid. 
+## Define a time grid. 
 On each date/time in our grid we want to calculate the expected exposure. For each date in our time grid we will simulate N states of the market and for each of these states we will calculate the NPV all of instruments in our portfolio / netting set. This results in N x (size of the netting set) simulated paths of NPVs. These paths can be used for EE, CVA (Credit value adjustment) or PFE (potential future exposure) calculations.
 
 In the next step will we will floor each path at zero. This give the exposure of the portfolio on a path at each time. The expected exposure is given by the average of all paths
@@ -15,7 +15,7 @@ For simplicity we restrict the portfolio to plain vanilla interest rate swaps in
 
 ## Setup of the market state at time zero (today)
 As mentioned above we live in a single curve world, we use a flat yield curve as discount and forward curve. During the Monte Carlo Simulation we will relink the Handle to the yieldTermStrucutre htys to our simulated yield curve. The original curve is stored in yts and the handle t0_curve.
-##Setup portfolio / netting set
+## Setup portfolio / netting set
 Our netting set consists of two swaps, one receiver and one payer swap. Both swaps differ also in notional and time to maturity. Finally we create a pricing engine and link each swap in our portfolio with it.
 
 In our Monte Carlo Simulation we can relink the handle hyts and use the same pricing engine. So we don’t need to create new pricing engines or relink the the deals to a new engine. We just need to call the method NPV of the instruments after relinking the yield term structure handle
